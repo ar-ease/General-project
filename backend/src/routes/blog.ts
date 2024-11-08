@@ -4,6 +4,7 @@ import { Prisma, PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { isJSDocClassTag } from "typescript";
 import { getPrismaClient } from "@prisma/client/runtime/react-native.js";
+import { createBlogInput } from "@ar-ease/medium-common";
 
 interface JWTPayload {
   id: string;
@@ -60,8 +61,15 @@ blogRouter.post("/", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const userId = c.get("userId");
-
+  console.log(userId);
   const body = await c.req.json();
+  const { success } = createBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    return c.json({
+      message: "not right credential",
+    });
+  }
 
   const blog = await prisma.post.create({
     data: {

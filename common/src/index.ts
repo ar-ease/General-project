@@ -1,14 +1,13 @@
 import { z } from "zod";
 
 export const signupInput = z.object({
-  username: z.string().email(),
-  password: z.string().min(6),
-  name: z.string().optional(),
+  email: z.string().email(),
+  password: z.string().min(4),
 });
 
 export const signinInput = z.object({
-  username: z.string().email(),
-  password: z.string().min(6),
+  email: z.string().email(),
+  password: z.string().min(4),
 });
 
 export const createBlogInput = z.object({
@@ -16,7 +15,6 @@ export const createBlogInput = z.object({
   content: z.string(),
   id: z.string(),
 });
-export type CreateBlogInput = z.infer<typeof createBlogInput>;
-
-export type SigninInput = z.infer<typeof signinInput>;
 export type SignupInput = z.infer<typeof signupInput>;
+export type SigninInput = z.infer<typeof signinInput>;
+export type CreateBlogInput = z.infer<typeof createBlogInput>;

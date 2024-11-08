@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { decode, sign, verify } from "hono/jwt";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import { signupInput, signinInput } from "@ar-ease/medium-common";
 
 interface JWTPayload {
   id: string;
@@ -26,11 +27,15 @@ export const userRouter = new Hono<{
 userRouter.post("/signup", async (c) => {
   const body = await c.req.json();
 
-  const { success } = signupInput.safeParse(body);
+  const { success, error } = signupInput.safeParse(body);
+  console.log("result below");
+  console.log(success);
+
   if (!success) {
     c.status(411);
     return c.json({
       message: "input not correct",
+      error: error,
     });
   }
   try {
@@ -64,12 +69,15 @@ userRouter.post("/signup", async (c) => {
 });
 userRouter.post("/signin", async (c) => {
   const body = await c.req.json();
+  console.log(body);
 
-  const { success } = signinInput.safeParse(body);
+  const { success, error } = signinInput.safeParse(body);
+  console.log(error);
   if (!success) {
     c.status(411);
     return c.json({
       message: "input not correct",
+      error: error,
     });
   }
 
