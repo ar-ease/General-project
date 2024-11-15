@@ -1,7 +1,18 @@
-export const Signin = ()=>{
-    return(
-        <div>
-            <h1>Signup</h1>
+import { Auth } from "../components/Auth";
+import { Quotes } from "../components/Quotes";
+export const Signin = () => {
+  return (
+    <div>
+      <div className="grid grid-cols-10">
+        <div className="lg:col-span-6 col-span-10">
+          <div>
+            <Auth type="signin" />
+          </div>
         </div>
-    )
-}
+        <div className="col-span-4 hidden lg:block  ">
+          <Quotes />
+        </div>
+      </div>
+    </div>
+  );
+};

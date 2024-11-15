@@ -1,6 +1,9 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { userRouter } from "./routes/user";
+
 import { blogRouter } from "./routes/blog";
+
 // Define the JWT payload type
 interface JWTPayload {
   id: string;
@@ -22,6 +25,8 @@ const app = new Hono<{
   Variables: Variables;
 }>();
 
+app.use("/*", cors());
+
 app.route("/api/v1/user", userRouter);
 app.route("/api/v1/blog", blogRouter);
 
@@ -31,7 +36,7 @@ app.get("/api/v1/test", (c) => {
 });
 
 app.get("/", (c) => {
-  return c.json({ message: "Welcome to the blog API" });
+  return c.json({ message: "Welcome to the blog API aithere" });
 });
 
 export default app;
